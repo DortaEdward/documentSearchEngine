@@ -25,7 +25,7 @@ func readFile(filepath string) ([]byte, error) {
   return file, err
 }
 
-func main(){
+func lex_file() map[string]int{
   occurances := make(map[string]int)
   file, err := readFile("shakespeare.txt")
   if err != nil{
@@ -50,7 +50,10 @@ func main(){
       occurances[token.Literal] = 1
     }
   }
+  return occurances
 
+}
+func write_to_json_file(occurances map[string]int){
   jsonData, _ := json.Marshal(occurances)
 
   newFile, err := os.Create("occurances.json")
@@ -62,6 +65,12 @@ func main(){
   if err != nil {
     log.Fatal("There was an error with writing to the file")
   }
+}
 
+
+func main(){
+  occurances := lex_file()
+  // add file_name
+  write_to_json_file(occurances)
 }
 
